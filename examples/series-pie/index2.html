@@ -175,7 +175,7 @@
 	var deg = 0;
 	function labelFormatter(label, series) {
 		console.debug(series);
-		var res = "<div style='font-size:8pt; text-align:center; padding:2px; color:white; transform: rotate("+(deg+series.angle*0.5+1.57)+"rad);'>" + label + "</div>";
+		var res = "<div style='font-size:20pt; text-align:center; padding:2px; color:white; transform: rotate("+(deg+series.angle*0.5+1.57)+"rad);'>" + label + "</div>";
 		deg += series.angle;
 		return res;
 	}
