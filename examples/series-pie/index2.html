@@ -1,0 +1,205 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Flot Examples: Pie Charts</title>
+	<link href="../examples.css" rel="stylesheet" type="text/css">
+	<style type="text/css">
+
+	.demo-container {
+		z-index: 1;
+		position: relative;
+		height: 800px;
+	}
+
+	#placeholder {
+		z-index: -1;
+		left: 10%;
+  		transform: translateX(-50%);
+		width: 600px;
+	}
+
+	#menu {
+		top: 20px;
+		left: 625px;
+		bottom: 20px;
+		right: 20px;
+		width: 200px;
+	}
+
+	#menu button {
+		display: inline-block;
+		width: 200px;
+		padding: 3px 0 2px 0;
+		margin-bottom: 4px;
+		background: #eee;
+		border: 1px solid #999;
+		border-radius: 2px;
+		font-size: 16px;
+		-o-box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+		-ms-box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+		-moz-box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+		-webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+		box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+		cursor: pointer;
+	}
+
+	#description {
+		margin: 15px 10px 20px 10px;
+	}
+
+	#code {
+		display: block;
+		width: 870px;
+		padding: 15px;
+		margin: 10px auto;
+		border: 1px dashed #999;
+		background-color: #f8f8f8;
+		font-size: 16px;
+		line-height: 20px;
+		color: #666;
+	}
+
+	ul {
+		font-size: 10pt;
+	}
+
+	ul li {
+		margin-bottom: 0.5em;
+	}
+
+	ul.options li {
+		list-style: none;
+		margin-bottom: 1em;
+	}
+
+	ul li i {
+		color: #999;
+	}
+	.demo-placeholder {
+	animation: roll 1s linear infinite;
+	}
+	
+	@keyframes roll {
+		0% {
+			transform: rotate(0deg);
+		}
+		100% {
+			transform: rotate(360deg);
+		}
+	}
+	.triangle {
+		z-index: 1;
+  transform: translate(330px, 100px);
+	width: 0;
+	height: 0;
+	border-left: 50px solid transparent;
+	border-right: 50px solid transparent;
+	border-top: 100px solid black;
+
+	}
+	</style>
+	<script language="javascript" type="text/javascript" src="../../source/jquery.js"></script>
+	<script language="javascript" type="text/javascript" src="../../source/jquery.canvaswrapper.js"></script>
+	<script language="javascript" type="text/javascript" src="../../source/jquery.colorhelpers.js"></script>
+	<script language="javascript" type="text/javascript" src="../../source/jquery.flot.js"></script>
+	<script language="javascript" type="text/javascript" src="../../source/jquery.flot.saturated.js"></script>
+	<script language="javascript" type="text/javascript" src="../../source/jquery.flot.browser.js"></script>
+	<script language="javascript" type="text/javascript" src="../../source/jquery.flot.drawSeries.js"></script>
+	<script language="javascript" type="text/javascript" src="../../source/jquery.flot.uiConstants.js"></script>
+	<script language="javascript" type="text/javascript" src="../../source/jquery.flot.legend.js"></script>
+	<script language="javascript" type="text/javascript" src="../../source/jquery.flot.pie.js"></script>
+	<script type="text/javascript">
+
+	$(function() {
+
+		// Example Data
+
+		//var data = [
+		//	{ label: "Series1",  data: 10},
+		//	{ label: "Series2",  data: 30},
+		//	{ label: "Series3",  data: 90},
+		//	{ label: "Series4",  data: 70},
+		//	{ label: "Series5",  data: 80},
+		//	{ label: "Series6",  data: 110}
+		//];
+
+		var data = [
+			{ label: "莫蘭迪料理鍋",  data: 2},
+			{ label: "小米離子吹風機",  data: 1},
+			{ label: "保養品$3000元",  data: 2},
+			{ label: "課程劵$1000",  data: 2},
+			{ label: "課程劵$3000",  data: 1},
+			{ label: "保養品市價$5000",  data: 1},
+			{ label: "下午茶禮券",  data: 2},
+			{ label: "麵包機",  data: 1},
+			{ label: "鬆餅機",  data: 1},
+			{ label: "母親節禮盒",  data: 2},
+			{ label: "精品法蘭絨毯",  data: 2},
+			{ label: "彩妝禮盒組",  data: 1},
+			{ label: "產品折價卷$1000",  data: 1}
+		];
+
+		//var data = [
+		//	{ label: "Series A",  data: 0.2063},
+		//	{ label: "Series B",  data: 38888}
+		//];
+
+		// Randomly Generated Data
+
+
+		var placeholder = $("#placeholder");
+
+		$.plot(placeholder, data, {
+				series: {
+					pie: {
+						show: true,
+						radius: 1,
+						label: {
+							show: true,
+							radius: 3/5,
+							formatter: labelFormatter,
+							background: {
+								opacity: 0
+							}
+						}
+					}
+				},
+				legend: {
+					show: false
+				}
+			});
+	});
+
+	// A custom label formatter used by several of the plots
+	var deg = 0;
+	function labelFormatter(label, series) {
+		console.debug(series);
+		var res = "<div style='font-size:8pt; text-align:center; padding:2px; color:white; transform: rotate("+(deg+series.angle*0.5+1.57)+"rad);'>" + label + "</div>";
+		deg += series.angle;
+		return res;
+	}
+	function rotate(data){
+		if (data.style.animationPlayState === 'paused') 
+		{
+			data.style.animationPlayState='running'; 
+			//$("p").css("animation-play-state", "running");
+		} 
+		else 
+		{
+			data.style.animationPlayState='paused'; 
+			//$("p").css("animation-play-state", "paused");
+		}
+		
+	}
+
+	</script>
+</head>
+<body>
+	<div class="demo-container">
+		
+		<div class="triangle"></div>
+		<div id="placeholder" class="demo-placeholder" onclick="rotate(this)"></div>
+	</div>
+</body>
+</html>
